@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		205C5F872D6C87E2002C1E9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C5F7D2D6C87E2002C1E9B /* AppDelegate.swift */; };
 		205C5F882D6C87E2002C1E9B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C5F842D6C87E2002C1E9B /* SceneDelegate.swift */; };
-		205C5F892D6C87E2002C1E9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C5F852D6C87E2002C1E9B /* ViewController.swift */; };
+		205C5F892D6C87E2002C1E9B /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C5F852D6C87E2002C1E9B /* ImagesListViewController.swift */; };
 		205C5F8A2D6C87E2002C1E9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 205C5F7E2D6C87E2002C1E9B /* Assets.xcassets */; };
 		205C5F8C2D6C87E2002C1E9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 205C5F812D6C87E2002C1E9B /* LaunchScreen.storyboard */; };
 		205C5F8D2D6C87E2002C1E9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 205C5F832D6C87E2002C1E9B /* Main.storyboard */; };
+		205C5FC12D6DCA72002C1E9B /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C5FC02D6DCA6F002C1E9B /* ImagesListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +24,8 @@
 		205C5F802D6C87E2002C1E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		205C5F822D6C87E2002C1E9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		205C5F842D6C87E2002C1E9B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		205C5F852D6C87E2002C1E9B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		205C5F852D6C87E2002C1E9B /* ImagesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewController.swift; sourceTree = "<group>"; };
+		205C5FC02D6DCA6F002C1E9B /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +60,30 @@
 			children = (
 				205C5F7D2D6C87E2002C1E9B /* AppDelegate.swift */,
 				205C5F842D6C87E2002C1E9B /* SceneDelegate.swift */,
+				205C5F832D6C87E2002C1E9B /* Main.storyboard */,
+				205C5FC22D6DCAA5002C1E9B /* ImageList */,
+				205C5FC42D6DCACE002C1E9B /* Resources */,
+			);
+			path = ImageFeed;
+			sourceTree = "<group>";
+		};
+		205C5FC22D6DCAA5002C1E9B /* ImageList */ = {
+			isa = PBXGroup;
+			children = (
+				205C5F852D6C87E2002C1E9B /* ImagesListViewController.swift */,
+				205C5FC02D6DCA6F002C1E9B /* ImagesListCell.swift */,
+			);
+			path = ImageList;
+			sourceTree = "<group>";
+		};
+		205C5FC42D6DCACE002C1E9B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				205C5F7E2D6C87E2002C1E9B /* Assets.xcassets */,
 				205C5F7F2D6C87E2002C1E9B /* Info.plist */,
 				205C5F812D6C87E2002C1E9B /* LaunchScreen.storyboard */,
-				205C5F832D6C87E2002C1E9B /* Main.storyboard */,
-				205C5F852D6C87E2002C1E9B /* ViewController.swift */,
 			);
-			path = ImageFeed;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,8 +161,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				205C5F872D6C87E2002C1E9B /* AppDelegate.swift in Sources */,
+				205C5FC12D6DCA72002C1E9B /* ImagesListCell.swift in Sources */,
 				205C5F882D6C87E2002C1E9B /* SceneDelegate.swift in Sources */,
-				205C5F892D6C87E2002C1E9B /* ViewController.swift in Sources */,
+				205C5F892D6C87E2002C1E9B /* ImagesListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,19 +198,19 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4ZJ9V5ZWNC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageFeed/Info.plist;
+				INFOPLIST_FILE = ImageFeed/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.ImageFeed;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.dmitroy.ImageFeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -211,19 +231,19 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4ZJ9V5ZWNC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ImageFeed/Info.plist;
+				INFOPLIST_FILE = ImageFeed/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.ImageFeed;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.dmitroy.ImageFeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -287,7 +307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -344,7 +364,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
