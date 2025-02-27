@@ -8,10 +8,11 @@
 import UIKit
 
 final class ImagesListViewController: UIViewController {
-    //MARK: -IBOutlet
+    
+    //MARK: - IBOutlet
     @IBOutlet private var tableView: UITableView!
     
-    // MARK: -Private properties
+    // MARK: - Private properties
     private let photosName = Array(0..<20).map{"\($0)"}
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -20,7 +21,7 @@ final class ImagesListViewController: UIViewController {
         return formatter
     }()
     
-    // MARK: -viewDidLoad
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +33,7 @@ final class ImagesListViewController: UIViewController {
 }
 
 extension ImagesListViewController: UITableViewDataSource {
+    
     // MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         photosName.count
@@ -45,7 +47,7 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-            imageListCell.configure(
+        imageListCell.configure(
             image: UIImage(named: photosName[indexPath.row]),
             date: dateFormatter.string(from: Date()),
             isLiked: indexPath.row % 2 == 0
@@ -56,6 +58,7 @@ extension ImagesListViewController: UITableViewDataSource {
 }
 
 extension ImagesListViewController: UITableViewDelegate {
+    
     // MARK: didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }

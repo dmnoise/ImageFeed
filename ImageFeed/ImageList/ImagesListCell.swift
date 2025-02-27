@@ -8,15 +8,16 @@
 import UIKit
 
 final class ImagesListCell: UITableViewCell {
-    // MARK: -IBOutlet
+    
+    // MARK: - IBOutlet
     @IBOutlet private var imageCell: UIImageView!
     @IBOutlet private var likeButton: UIButton!
     @IBOutlet private var dateLabel: UILabel!
 
-    // MARK: -Public propetrties
+    // MARK: - Public propetrties
     static let reuseIndetifer = "ImagesListCell"
 
-    // MARK: -Public methods
+    // MARK: - Public methods
     func configure(image: UIImage?, date: String, isLiked: Bool) {
         guard let image else { return }
         
