@@ -60,7 +60,7 @@ final class ProfileViewController: UIViewController {
     
     
     // MARK: - Private methods
-    func initialUi() {
+    private func initialUi() {
         view.addSubview(avatarImageView)
         view.addSubview(nameLabel)
         view.addSubview(loginLabel)
@@ -72,7 +72,7 @@ final class ProfileViewController: UIViewController {
         logoutButton.addTarget(self, action: #selector(pressLogoutButtton), for: .touchUpInside)
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -95,7 +95,7 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    // MARK: - IBAction
-    @objc func pressLogoutButtton() {
+    // MARK: - objc
+    @objc private func pressLogoutButtton() {
     }
 }
