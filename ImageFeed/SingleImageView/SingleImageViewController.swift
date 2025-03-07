@@ -25,7 +25,7 @@ final class SingleImageViewController: UIViewController {
         }
     }
 
-    // MARK: - viewDidLoad
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,7 +51,7 @@ final class SingleImageViewController: UIViewController {
             activityItems: [image],
             applicationActivities: nil
         )
-        
+
         present(share, animated: true, completion: nil)
     }
     
