@@ -32,7 +32,6 @@ final class SingleImageViewController: UIViewController {
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         
-        
         guard let image else { return }
         imageView.image = image
         imageView.frame.size = image.size
@@ -64,6 +63,12 @@ final class SingleImageViewController: UIViewController {
         
         let visibleRectSize = scrollView.bounds.size
         let imageSize = image.size
+        
+        guard visibleRectSize.width != 0, visibleRectSize.height != 0,
+              imageSize.width != 0, imageSize.height != 0 else {
+            return
+        }
+        
         let hScale = visibleRectSize.width / imageSize.width
         let vScale = visibleRectSize.height / imageSize.height
         let scale = min(maxZoomScale, max(minZoomScale, min(hScale, vScale)))
