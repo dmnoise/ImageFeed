@@ -15,6 +15,7 @@ enum WebViewConstants {
 final class WebViewViewController: UIViewController {
     
     weak var delegate: WebViewViewControllerDelegate?
+    private let oauth2Service = OAuth2Service.shared
     
     // MARK: - IBOutlets
     @IBOutlet private var webView: WKWebView!
@@ -32,13 +33,18 @@ final class WebViewViewController: UIViewController {
         )
         
         updateProgress()
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .darkContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         webView.navigationDelegate = self
-     
+        
         loadRequest()
     }
     
@@ -53,12 +59,13 @@ final class WebViewViewController: UIViewController {
         of object: Any?,
         change: [NSKeyValueChangeKey : Any]?,
         context: UnsafeMutableRawPointer?) {
+            
             if keyPath == #keyPath(WKWebView.estimatedProgress) {
                 updateProgress()
             } else {
                 super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
             }
-    }
+        }
     
     // MARK: - IBAction
     @IBAction func didTapBackButton() {
@@ -112,7 +119,7 @@ extension WebViewViewController: WKNavigationDelegate {
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
         if let code = code(from: navigationAction) {
-            //TODO: process code
+            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
