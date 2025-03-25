@@ -16,7 +16,7 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Private properties
     private let oauth2Service = OAuth2Service.shared
-    private let storage = OAuth2TokenStorage()
+    private let storage = OAuth2TokenStorage.shared
     
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
