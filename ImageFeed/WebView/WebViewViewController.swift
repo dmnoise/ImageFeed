@@ -80,6 +80,7 @@ final class WebViewViewController: UIViewController {
     
     private func loadRequest() {
         guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
+            print("loadRequest: Не удалось сформировать urlComponents")
             return
         }
         
@@ -90,7 +91,10 @@ final class WebViewViewController: UIViewController {
             URLQueryItem(name: "scope", value: Constants.accessScope)
         ]
         
-        guard let url = urlComponents.url else { return }
+        guard let url = urlComponents.url else {
+            print("loadRequest: Не удалось сформировать url")
+            return
+        }
         
         let request = URLRequest(url: url)
         webView.load(request)
@@ -106,6 +110,7 @@ final class WebViewViewController: UIViewController {
         {
             return codeItem.value
         } else {
+            print("code: Не удалось получить значение")
             return nil
         }
     }

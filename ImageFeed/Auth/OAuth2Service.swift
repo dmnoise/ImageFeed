@@ -30,9 +30,14 @@ final class OAuth2Service {
     func makeOAuthTokenRequest(code: String) -> URLRequest? {
         
         let baseUrl = "https://unsplash.com/oauth/token"
-        var urlComponents = URLComponents(string: baseUrl)
+        let urlComponents = URLComponents(string: baseUrl)
         
-        urlComponents?.queryItems = [
+        guard var urlComponents else {
+            print("makeOAuthTokenRequest: Ошибка создания URLComponents")
+            return nil
+        }
+        
+        urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: Constants.accessKey),
             URLQueryItem(name: "client_secret", value: Constants.secretKey),
             URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
@@ -40,7 +45,8 @@ final class OAuth2Service {
             URLQueryItem(name: "grant_type", value: "authorization_code"),
         ]
         
-        guard let url = urlComponents?.url else {
+        guard let url = urlComponents.url else {
+            print("makeOAuthTokenRequest: Ошибка создания url")
             return nil
         }
         
@@ -64,9 +70,11 @@ final class OAuth2Service {
                     completion(.success(result.accessToken))
                 }
                 catch {
+                    print("fetchOAuthToken: Ошибка декодирования - \(error.localizedDescription)")
                     completion(.failure(error))
                 }
             case .failure(let error):
+                print("fetchOAuthToken: \(error.localizedDescription)")
                 completion(.failure(error))
             }
         }

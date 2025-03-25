@@ -89,7 +89,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                 storage.token = token
                 self.switchToTabBar()
             case .failure:
-                break
+                print("fetchOAuthToken: Токен не был получен")
             }
         }
     }
