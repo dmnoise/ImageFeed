@@ -5,21 +5,13 @@
 //  Created by Dmitriy Noise on 19.03.2025.
 //
 
-import UIKit
+import Foundation
 
 struct OAuthTokenResponseBody: Decodable {
     let accessToken: String
     let tokenType: String
     let scope: String
     let createdAt: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case accessToken = "access_token"
-        case tokenType = "token_type"
-        case scope = "scope"
-        case createdAt = "created_at"
-        
-    }
 }
 
 final class OAuth2Service {
@@ -66,7 +58,10 @@ final class OAuth2Service {
             switch data {
             case .success(let data):
                 do {
-                    let result = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
+                    let result = try decoder.decode(OAuthTokenResponseBody.self, from: data)
                     completion(.success(result.accessToken))
                 }
                 catch {
