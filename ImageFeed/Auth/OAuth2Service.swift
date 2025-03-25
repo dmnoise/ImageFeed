@@ -19,6 +19,12 @@ final class OAuth2Service {
     
     private init() {}
     
+    private enum HttpMethods {
+        static let get = "GET"
+        static let post = "POST"
+        static let head = "HEAD"
+    }
+    
     func makeOAuthTokenRequest(code: String) -> URLRequest? {
         
         let baseUrl = "https://unsplash.com/oauth/token"
@@ -43,7 +49,7 @@ final class OAuth2Service {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = HttpMethods.post
         
         return request
     }
