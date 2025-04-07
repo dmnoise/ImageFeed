@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum AuthServiceError: Error {
+    case invalidRequest
+}
+
 struct OAuthTokenResponseBody: Decodable {
     let accessToken: String
     let tokenType: String
@@ -18,6 +22,9 @@ final class OAuth2Service {
     static let shared = OAuth2Service()
     
     private init() {}
+    
+    private var task: URLSessionTask?
+    private var lastCode: String?
     
     private enum HttpMethods {
         static let get = "GET"
@@ -55,31 +62,49 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let request = makeOAuthTokenRequest(code: code) else {
+        
+        assert(Thread.isMainThread)
+        
+        guard lastCode != code else {
+            completion(.failure(AuthServiceError.invalidRequest))
             return
         }
         
-        let task = URLSession.shared.data(for: request) { data in
+        task?.cancel()
+        lastCode = code
+        
+        guard let request = makeOAuthTokenRequest(code: code) else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+
+        let task = URLSession.shared.data(for: request) { [weak self] data in
             
-            switch data {
-            case .success(let data):
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    
-                    let result = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    completion(.success(result.accessToken))
-                }
-                catch {
-                    print("fetchOAuthToken: Ошибка декодирования - \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                switch data {
+                case .success(let data):
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        
+                        let result = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                        completion(.success(result.accessToken))
+                    }
+                    catch {
+                        print("fetchOAuthToken: Ошибка декодирования - \(error.localizedDescription)")
+                        completion(.failure(error))
+                    }
+                case .failure(let error):
+                    print("fetchOAuthToken: \(error.localizedDescription)")
                     completion(.failure(error))
                 }
-            case .failure(let error):
-                print("fetchOAuthToken: \(error.localizedDescription)")
-                completion(.failure(error))
+                
+                self?.lastCode = nil
+                self?.task = nil
             }
         }
         
+        self.task = task
         task.resume()
     }
 }
