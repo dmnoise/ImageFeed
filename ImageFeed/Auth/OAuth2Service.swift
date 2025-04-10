@@ -26,12 +26,6 @@ final class OAuth2Service {
     private var task: URLSessionTask?
     private var lastCode: String?
     
-    private enum HttpMethods {
-        static let get = "GET"
-        static let post = "POST"
-        static let head = "HEAD"
-    }
-    
     func makeOAuthTokenRequest(code: String) -> URLRequest? {
         
         let baseUrl = "https://unsplash.com/oauth/token"

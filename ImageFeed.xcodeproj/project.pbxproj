@@ -19,6 +19,8 @@
 		206598512D706E75008DFC56 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206598502D706E66008DFC56 /* ProfileViewController.swift */; };
 		2071DB452D9EA2DD00AA2C66 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 2071DB442D9EA2DD00AA2C66 /* ProgressHUD */; };
 		2071DB4C2DA3E09200AA2C66 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2071DB4A2DA3E09200AA2C66 /* UIBlockingProgressHUD.swift */; };
+		2071DB4E2DA58AC200AA2C66 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2071DB4D2DA58ABD00AA2C66 /* ProfileService.swift */; };
+		2071DB502DA6DC0200AA2C66 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2071DB4F2DA6DC0100AA2C66 /* ProfileImageService.swift */; };
 		20B9652C2D8589130049DA77 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9652B2D8589100049DA77 /* AuthViewController.swift */; };
 		20B9652E2D858BD80049DA77 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9652D2D858BD70049DA77 /* WebViewViewController.swift */; };
 		20B965322D859F060049DA77 /* WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B965312D859F050049DA77 /* WebViewViewControllerDelegate.swift */; };
@@ -42,6 +44,8 @@
 		205F92D42D70D8E600E71284 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		206598502D706E66008DFC56 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		2071DB4A2DA3E09200AA2C66 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		2071DB4D2DA58ABD00AA2C66 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		2071DB4F2DA6DC0100AA2C66 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		20B9652B2D8589100049DA77 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		20B9652D2D858BD70049DA77 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		20B965312D859F050049DA77 /* WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -94,7 +98,6 @@
 				205C5F7D2D6C87E2002C1E9B /* AppDelegate.swift */,
 				205C5F842D6C87E2002C1E9B /* SceneDelegate.swift */,
 				205C5F832D6C87E2002C1E9B /* Main.storyboard */,
-				20B965752D8D7C330049DA77 /* SplashViewController.swift */,
 				2071DB4B2DA3E09200AA2C66 /* Service */,
 				20B965702D8B48070049DA77 /* Helpers */,
 				20B9652A2D8588FE0049DA77 /* Auth */,
@@ -146,6 +149,9 @@
 		2071DB4B2DA3E09200AA2C66 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				2071DB4F2DA6DC0100AA2C66 /* ProfileImageService.swift */,
+				20B965752D8D7C330049DA77 /* SplashViewController.swift */,
+				2071DB4D2DA58ABD00AA2C66 /* ProfileService.swift */,
 				2071DB4A2DA3E09200AA2C66 /* UIBlockingProgressHUD.swift */,
 			);
 			path = Service;
@@ -248,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				205C5F872D6C87E2002C1E9B /* AppDelegate.swift in Sources */,
+				2071DB4E2DA58AC200AA2C66 /* ProfileService.swift in Sources */,
 				20B965322D859F060049DA77 /* WebViewViewControllerDelegate.swift in Sources */,
 				205C5FC12D6DCA72002C1E9B /* ImagesListCell.swift in Sources */,
 				206598512D706E75008DFC56 /* ProfileViewController.swift in Sources */,
@@ -257,6 +264,7 @@
 				20B9652C2D8589130049DA77 /* AuthViewController.swift in Sources */,
 				2071DB4C2DA3E09200AA2C66 /* UIBlockingProgressHUD.swift in Sources */,
 				2010DB0D2D84B12600818D7B /* Constants.swift in Sources */,
+				2071DB502DA6DC0200AA2C66 /* ProfileImageService.swift in Sources */,
 				20B965722D8B48190049DA77 /* URLSession+data.swift in Sources */,
 				205F92D52D70D8E900E71284 /* SingleImageViewController.swift in Sources */,
 				20B9652E2D858BD80049DA77 /* WebViewViewController.swift in Sources */,

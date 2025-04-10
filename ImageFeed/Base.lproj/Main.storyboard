@@ -12,7 +12,7 @@
         <!--SplashViewController-->
         <scene sceneID="XTG-4q-fH2">
             <objects>
-                <viewController title="SplashViewController" id="hrL-IU-RDp" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SplashView" title="SplashViewController" id="hrL-IU-RDp" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3lS-rv-iLh">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

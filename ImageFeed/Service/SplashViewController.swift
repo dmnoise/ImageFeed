@@ -17,6 +17,8 @@ final class SplashViewController: UIViewController {
     // MARK: - Private properties
     private let oauth2Service = OAuth2Service.shared
     private let storage = OAuth2TokenStorage.shared
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
@@ -28,8 +30,8 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
                 
-        if let _ = storage.token {
-            switchToTabBar()
+        if let token = storage.token {
+            fetchProfile(token)
         } else {
             performSegue(withIdentifier: SegueKeys.showNavigationController, sender: nil)
         }
@@ -73,6 +75,7 @@ final class SplashViewController: UIViewController {
 
 // MARK: - AuthViewControllerDelegate
 extension SplashViewController: AuthViewControllerDelegate {
+    
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
             guard let self else { return }
@@ -88,14 +91,33 @@ extension SplashViewController: AuthViewControllerDelegate {
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
             guard let self else { return }
             
-            UIBlockingProgressHUD.dismiss()
-            
             switch result {
             case .success(let token):
                 storage.token = token
                 self.switchToTabBar()
             case .failure:
                 print("fetchOAuthToken: Токен не был получен")
+            }
+            
+            UIBlockingProgressHUD.dismiss()
+        }
+    }
+    
+    private func fetchProfile(_ token: String) {
+        
+        UIBlockingProgressHUD.show()
+                
+        profileService.fetchProfile(token) { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success(let profile):
+                profileImageService.fetchProfileImage(username: profile.username) { _ in }
+                
+                self.switchToTabBar()
+                UIBlockingProgressHUD.dismiss()
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
         }
     }
