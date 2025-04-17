@@ -17,6 +17,8 @@ final class WebViewViewController: UIViewController {
     weak var delegate: WebViewViewControllerDelegate?
     private let oauth2Service = OAuth2Service.shared
     
+    private var estimatedProgressObservation: NSKeyValueObservation?
+    
     // MARK: - IBOutlets
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
@@ -24,13 +26,6 @@ final class WebViewViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        webView.addObserver(
-            self,
-            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-            options: .new,
-            context: nil
-        )
         
         updateProgress()
         setNeedsStatusBarAppearanceUpdate()
@@ -46,26 +41,15 @@ final class WebViewViewController: UIViewController {
         webView.navigationDelegate = self
         
         loadRequest()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
         
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-    }
-    
-    override func observeValue(
-        forKeyPath keyPath: String?,
-        of object: Any?,
-        change: [NSKeyValueChangeKey : Any]?,
-        context: UnsafeMutableRawPointer?) {
-            
-            if keyPath == #keyPath(WKWebView.estimatedProgress) {
-                updateProgress()
-            } else {
-                super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-            }
+        estimatedProgressObservation = webView.observe(
+            \.estimatedProgress,
+             options: [.new]
+        ) { [weak self] _, _ in
+            guard let self else { return }
+            self.updateProgress()
         }
+    }
     
     // MARK: - IBAction
     @IBAction func didTapBackButton() {
@@ -80,7 +64,7 @@ final class WebViewViewController: UIViewController {
     
     private func loadRequest() {
         guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
-            print("loadRequest: Не удалось сформировать urlComponents")
+            LogService.error("Не удалось сформировать urlComponents")
             return
         }
         
@@ -92,7 +76,7 @@ final class WebViewViewController: UIViewController {
         ]
         
         guard let url = urlComponents.url else {
-            print("loadRequest: Не удалось сформировать url")
+            LogService.error("Не удалось сформировать url")
             return
         }
         
@@ -110,7 +94,7 @@ final class WebViewViewController: UIViewController {
         {
             return codeItem.value
         } else {
-            print("code: Не удалось получить значение")
+            LogService.error("Не удалось получить значение")
             return nil
         }
     }

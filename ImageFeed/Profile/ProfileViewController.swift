@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
@@ -117,7 +118,13 @@ final class ProfileViewController: UIViewController {
             return
         }
         
-        print("Update avatar url: \(imageUrl)")
+        let processeor = RoundCornerImageProcessor(cornerRadius: 35)
+        
+        avatarImageView.kf.setImage(
+            with: imageUrl,
+            placeholder: UIImage(resource: .avatarStub),
+            options: [.processor(processeor)]
+        )        
     }
     
     private func setupConstraints() {
@@ -149,16 +156,30 @@ final class ProfileViewController: UIViewController {
     // MARK: - objc
     @objc private func pressLogoutButtton() {
         
-        OAuth2TokenStorage.shared.token = nil
+        let actions = [
+            AlertAction(title: "Нет", style: .destructive, handler: nil),
+            AlertAction(title: "Да", style: .default) {
+                OAuth2TokenKeychain.shared.token = nil
+                
+                guard let window = UIApplication.shared.windows.first else {
+                    assertionFailure("Invalid Configuration")
+                    return
+                }
+                
+                let splashView = UIStoryboard(name: "Main", bundle:.main)
+                    .instantiateViewController(withIdentifier: "SplashView")
+                
+                window.rootViewController = splashView
+            }
+        ]
         
-        guard let window = UIApplication.shared.windows.first else {
-            assertionFailure("Invalid Configuration")
-            return
-        }
+        let alert = AlertModel(
+            title: "Подверждение",
+            message: "Вы уверены что хотите выйти из аккаунта?",
+            actions: actions,
+            preferredStyle: .alert
+        )
         
-        let splashView = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: "SplashView")
-        
-        window.rootViewController = splashView
+        AlertPresenter(from: alert).presentAlert(from: self)
     }
 }

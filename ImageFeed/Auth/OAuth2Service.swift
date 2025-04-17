@@ -20,19 +20,20 @@ struct OAuthTokenResponseBody: Decodable {
 
 final class OAuth2Service {
     static let shared = OAuth2Service()
-    
     private init() {}
     
+    // MARK: - Private properties
     private var task: URLSessionTask?
     private var lastCode: String?
     
+    // MARK: - Public Methods
     func makeOAuthTokenRequest(code: String) -> URLRequest? {
         
         let baseUrl = "https://unsplash.com/oauth/token"
         let urlComponents = URLComponents(string: baseUrl)
         
         guard var urlComponents else {
-            print("makeOAuthTokenRequest: Ошибка создания URLComponents")
+            LogService.error("Ошибка создания URLComponents")
             return nil
         }
         
@@ -45,7 +46,7 @@ final class OAuth2Service {
         ]
         
         guard let url = urlComponents.url else {
-            print("makeOAuthTokenRequest: Ошибка создания url")
+            LogService.error("Ошибка создания url")
             return nil
         }
         
@@ -71,31 +72,21 @@ final class OAuth2Service {
             completion(.failure(AuthServiceError.invalidRequest))
             return
         }
-
-        let task = URLSession.shared.data(for: request) { [weak self] data in
+        
+        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             
-            DispatchQueue.main.async {
-                switch data {
-                case .success(let data):
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        
-                        let result = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                        completion(.success(result.accessToken))
-                    }
-                    catch {
-                        print("fetchOAuthToken: Ошибка декодирования - \(error.localizedDescription)")
-                        completion(.failure(error))
-                    }
-                case .failure(let error):
-                    print("fetchOAuthToken: \(error.localizedDescription)")
-                    completion(.failure(error))
-                }
+            guard let self else { return }
                 
-                self?.lastCode = nil
-                self?.task = nil
+            switch result {
+            case .success(let result):
+                completion(.success(result.accessToken))
+            case .failure(let error):
+                LogService.error(error.localizedDescription)
+                completion(.failure(error))
             }
+            
+            self.lastCode = nil
+            self.task = nil
         }
         
         self.task = task
