@@ -20,11 +20,25 @@ final class SplashViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     
+    private var splashLogo: UIImageView = {
+        let image = UIImage(resource: .vector)
+        let imageView = UIImageView(image: image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+    
+        return imageView
+    }()
+    
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        initialUi()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -33,7 +47,7 @@ final class SplashViewController: UIViewController {
         if let token = storage.token {
             fetchProfile(token)
         } else {
-            performSegue(withIdentifier: SegueKeys.showNavigationController, sender: nil)
+            swithAuthVC()
         }
     }
     
@@ -60,6 +74,38 @@ final class SplashViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    private func initialUi() {
+        view.backgroundColor = .ypBlack
+        view.addSubview(splashLogo)
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            splashLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            splashLogo.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            splashLogo.heightAnchor.constraint(equalToConstant: 77),
+            splashLogo.widthAnchor.constraint(equalToConstant: 75)
+        ])
+    }
+    
+    private func swithAuthVC() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        
+        guard
+            let authVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
+        else {
+            return
+        }
+        
+        authVC.delegate = self
+        authVC.modalPresentationStyle = .fullScreen
+        
+        present(authVC, animated: true)
+    }
+
+    
     private func switchToTabBar() {
         guard let window = UIApplication.shared.windows.first else {
             assertionFailure("Invalid Configuration")
