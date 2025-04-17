@@ -162,9 +162,9 @@
 			isa = PBXGroup;
 			children = (
 				2071DB5B2DAEB47D00AA2C66 /* LogService.swift */,
+				2071DB4D2DA58ABD00AA2C66 /* ProfileService.swift */,
 				2071DB4F2DA6DC0100AA2C66 /* ProfileImageService.swift */,
 				20B965752D8D7C330049DA77 /* SplashViewController.swift */,
-				2071DB4D2DA58ABD00AA2C66 /* ProfileService.swift */,
 				2071DB4A2DA3E09200AA2C66 /* UIBlockingProgressHUD.swift */,
 			);
 			path = Service;

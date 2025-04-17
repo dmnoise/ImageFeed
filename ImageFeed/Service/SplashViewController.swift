@@ -10,7 +10,6 @@ import UIKit
 final class SplashViewController: UIViewController {
     
     private enum SegueKeys {
-        static let showTabBar = "showTabBar"
         static let showNavigationController = "showNavigationController"
     }
     
@@ -112,8 +111,10 @@ final class SplashViewController: UIViewController {
             return
         }
         
-        let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: "TabBarViewController")
+        let tabBarController = UIStoryboard(
+            name: "Main",
+            bundle: .main
+        ).instantiateViewController(withIdentifier: "TabBarViewController")
         
         window.rootViewController = tabBarController
     }
