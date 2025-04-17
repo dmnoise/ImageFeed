@@ -155,7 +155,8 @@
         <!--Tab Bar Controller-->
         <scene sceneID="LgD-6Z-2Hw">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarViewController" id="9z8-dz-fLY" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lpz-vr-HuP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tabBarController storyboardIdentifier="TabBarViewController" id="9z8-dz-fLY" customClass="TabBarController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2ys-8S-K29">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -165,19 +166,14 @@
                             <color key="backgroundColor" name="YP Black"/>
                         </tabBarAppearance>
                     </tabBar>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="tVj-YB-k9G"/>
-                        <segue destination="3le-Je-NN4" kind="relationship" relationship="viewControllers" id="2kT-MV-mbf"/>
-                    </connections>
                 </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lpz-vr-HuP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="788.54961832061065" y="-298.59154929577466"/>
         </scene>
         <!--Image List-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Image List" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImagesListViewController" title="Image List" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -332,22 +328,6 @@
             </objects>
             <point key="canvasLocation" x="2529" y="-647"/>
         </scene>
-        <!--Profile View-->
-        <scene sceneID="TcV-Wm-a14">
-            <objects>
-                <viewController title="Profile View" id="3le-Je-NN4" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ihr-gO-V9M">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="REm-4b-Mnu"/>
-                        <color key="backgroundColor" name="YP Black"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_profile_active" id="vZr-GJ-Zi8"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="whz-Rd-Boc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1715" y="88"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="cNc-a2-9Xf">
             <objects>
@@ -377,7 +357,6 @@
         <image name="chevronBackwardBlack" width="9" height="15.666666984558105"/>
         <image name="chevronBackwardWhite" width="9" height="15.666666984558105"/>
         <image name="tab_editorial_active" width="30" height="30"/>
-        <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Black">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

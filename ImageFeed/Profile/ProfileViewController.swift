@@ -81,6 +81,8 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private methods
     private func initialUi() {
+        view.backgroundColor = .ypBlack
+        
         view.addSubview(avatarImageView)
         view.addSubview(nameLabel)
         view.addSubview(loginLabel)
