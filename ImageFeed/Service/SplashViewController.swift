@@ -168,13 +168,9 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
     
     private func fetchProfile(_ token: String) {
-                     
-        UIBlockingProgressHUD.show()
-        
+                             
         profileService.fetchProfile(token) { [weak self] result in
-            
-            UIBlockingProgressHUD.dismiss()
-            
+                        
             guard let self else { return }
             
             switch result {
