@@ -139,8 +139,6 @@ extension SplashViewController: AuthViewControllerDelegate {
         
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
             
-            UIBlockingProgressHUD.dismiss()
-            
             guard let self else { return }
             
             switch result {
@@ -149,20 +147,31 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.fetchProfile(token)
 
             case .failure:
-                let actions = [
-                    AlertAction(title: "Ok", style: .cancel, handler: nil)
-                ]
-                
-                let alert = AlertModel(
-                    title: "Что-то пошло не так",
-                    message: "Не удалось войти в систему",
-                    actions: actions,
-                    preferredStyle: .alert
-                )
-                
-                AlertPresenter(from: alert).presentAlert(from: self)
-                
+                UIBlockingProgressHUD.dismiss()
                 LogService.error("Токен не был получен")
+               
+                DispatchQueue.main.async {
+                    if let rootController = UIApplication.shared.windows.first?.rootViewController {
+                        
+                        var topController = rootController
+                        while let presentedController = topController.presentedViewController {
+                            topController = presentedController
+                        }
+                        
+                        let actions = [
+                            AlertAction(title: "Ok", style: .cancel, handler: nil)
+                        ]
+                        
+                        let alert = AlertModel(
+                            title: "Что-то пошло не так(",
+                            message: "Не удалось войти в систему",
+                            actions: actions,
+                            preferredStyle: .alert
+                        )
+                        
+                        AlertPresenter(from: alert).presentAlert(from: topController)
+                    }
+                }
             }
         }
     }
@@ -170,7 +179,9 @@ extension SplashViewController: AuthViewControllerDelegate {
     private func fetchProfile(_ token: String) {
                              
         profileService.fetchProfile(token) { [weak self] result in
-                        
+           
+            UIBlockingProgressHUD.dismiss()
+            
             guard let self else { return }
             
             switch result {
