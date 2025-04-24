@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Kingfisher
+import ProgressHUD
 
 final class SingleImageViewController: UIViewController {
     
@@ -15,20 +17,25 @@ final class SingleImageViewController: UIViewController {
     
     // MARK: - Public properties
     static let identifier = "ShowSingleImage"
-    var image: UIImage? {
+    var imageURL: String? {
         didSet {
-            guard isViewLoaded, let image else { return }
-            
-            imageView.image = image
-            imageView.frame.size = image.size
-            rescaleImageInScrollView(image: image)
+            loadFullImage()
         }
     }
-
+    
+    // MARK: - Private properties
+    private var image: UIImage? {
+        didSet {
+            guard isViewLoaded else { return }
+            
+            setupFullImage()
+        }
+    }
+    
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-            
+        
         setNeedsStatusBarAppearanceUpdate()
     }
     
@@ -38,10 +45,7 @@ final class SingleImageViewController: UIViewController {
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         
-        guard let image else { return }
-        imageView.image = image
-        imageView.frame.size = image.size
-        rescaleImageInScrollView(image: image)
+        loadFullImage()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -50,6 +54,8 @@ final class SingleImageViewController: UIViewController {
     
     // MARK: - IBAction
     @IBAction private func didTapBackButton() {
+        ProgressHUD.dismiss()
+        
         dismiss(animated: true, completion: nil)
     }
     
@@ -60,11 +66,45 @@ final class SingleImageViewController: UIViewController {
             activityItems: [image],
             applicationActivities: nil
         )
-
+        
         present(share, animated: true, completion: nil)
     }
     
     // MARK: - Private methods
+    private func loadFullImage() {
+        
+        guard isViewLoaded, let imageURL, let url = URL(string: imageURL) else {
+            return
+        }
+        
+        ProgressHUD.animate()
+        
+        imageView.kf.setImage(with: url) { [weak self] result in
+            
+            guard let self else { return }
+            
+            switch result {
+            case .success(let retriveImage):
+                DispatchQueue.main.async {
+                    self.image = retriveImage.image
+                }
+                
+                ProgressHUD.dismiss()
+            case .failure(let error):
+                LogService.error(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func setupFullImage() {
+        
+        guard let image else { return }
+        
+        imageView.image = image
+        imageView.frame.size = image.size
+        rescaleImageInScrollView(image: image)
+    }
+    
     private func rescaleImageInScrollView(image: UIImage) {
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
