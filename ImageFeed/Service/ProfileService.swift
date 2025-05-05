@@ -31,6 +31,10 @@ final class ProfileService {
     private(set) var profile: Profile?
     
     // MARK: - Public Methods
+    func logout() {
+        profile = nil
+    }
+    
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         
         guard let request = makeProfileServiceRequest(authToken: token) else {

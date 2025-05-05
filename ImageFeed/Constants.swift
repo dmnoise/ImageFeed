@@ -19,4 +19,5 @@ enum HttpMethods {
     static let get = "GET"
     static let post = "POST"
     static let head = "HEAD"
+    static let delete = "DELETE"
 }

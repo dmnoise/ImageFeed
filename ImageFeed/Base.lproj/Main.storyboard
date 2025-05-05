@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,7 +25,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgv-Ok-ZoM">
-                                <rect key="frame" x="16" y="680" width="361" height="48"/>
+                                <rect key="frame" x="16" y="646" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="L11-e2-dfi"/>
@@ -73,7 +73,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UzZ-FP-w9Y">
-                                <rect key="frame" x="9" y="0.0" width="44" height="44"/>
+                                <rect key="frame" x="9" y="59" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="CPf-Jb-dhz"/>
                                     <constraint firstAttribute="height" constant="44" id="F9m-34-aFB"/>
@@ -85,11 +85,11 @@
                                 </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6yo-cM-qqR">
-                                <rect key="frame" x="0.0" y="44" width="393" height="4"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="4"/>
                                 <color key="progressTintColor" name="YP Black"/>
                             </progressView>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h8f-zy-XWW">
-                                <rect key="frame" x="0.0" y="48" width="393" height="804"/>
+                                <rect key="frame" x="0.0" y="107" width="393" height="745"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -176,6 +176,9 @@
                                                     </constraints>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="Active"/>
+                                                    <connections>
+                                                        <action selector="pressLikeButton" destination="THn-te-LbY" eventType="touchUpInside" id="NdA-cl-P9g"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25 февраля 2025" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVC-UV-N84">
                                                     <rect key="frame" x="24.000000000000007" y="196" width="108.66666666666669" height="16"/>
@@ -183,17 +186,30 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qqZ-uh-zOh" userLabel="placeholder">
+                                                    <rect key="frame" x="16" y="4" width="361" height="216"/>
+                                                    <color key="backgroundColor" name="YP White"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="gI3-9I-Ln5" firstAttribute="bottom" secondItem="WVC-UV-N84" secondAttribute="bottom" constant="8" id="0Zo-E3-Qoc"/>
+                                                <constraint firstItem="qqZ-uh-zOh" firstAttribute="leading" secondItem="gI3-9I-Ln5" secondAttribute="leading" id="39s-84-xbi"/>
                                                 <constraint firstItem="gI3-9I-Ln5" firstAttribute="trailing" secondItem="w3l-6y-fJJ" secondAttribute="trailing" id="3Ug-1a-H3E"/>
+                                                <constraint firstItem="qqZ-uh-zOh" firstAttribute="top" secondItem="gI3-9I-Ln5" secondAttribute="top" id="53t-cC-n0l"/>
                                                 <constraint firstItem="WVC-UV-N84" firstAttribute="leading" secondItem="gI3-9I-Ln5" secondAttribute="leading" constant="8" id="8Zw-gn-SXc"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WVC-UV-N84" secondAttribute="trailing" constant="20" symbolic="YES" id="Mxl-KY-3uV"/>
                                                 <constraint firstAttribute="bottom" secondItem="gI3-9I-Ln5" secondAttribute="bottom" constant="4" id="N6x-Lo-FhM"/>
+                                                <constraint firstItem="qqZ-uh-zOh" firstAttribute="bottom" secondItem="gI3-9I-Ln5" secondAttribute="bottom" id="PAh-L8-3dq"/>
                                                 <constraint firstItem="gI3-9I-Ln5" firstAttribute="leading" secondItem="2QU-J0-3uu" secondAttribute="leading" constant="16" id="Shg-tg-JtV"/>
                                                 <constraint firstItem="gI3-9I-Ln5" firstAttribute="top" secondItem="2QU-J0-3uu" secondAttribute="top" constant="4" id="Tre-za-q4j"/>
                                                 <constraint firstAttribute="trailing" secondItem="gI3-9I-Ln5" secondAttribute="trailing" constant="16" id="Us3-SE-dpe"/>
+                                                <constraint firstItem="qqZ-uh-zOh" firstAttribute="trailing" secondItem="gI3-9I-Ln5" secondAttribute="trailing" id="Za1-qU-sOT"/>
                                                 <constraint firstItem="w3l-6y-fJJ" firstAttribute="top" secondItem="gI3-9I-Ln5" secondAttribute="top" id="dc3-7P-YmQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -202,6 +218,7 @@
                                             <outlet property="dateLabel" destination="WVC-UV-N84" id="Vpg-YK-lOO"/>
                                             <outlet property="imageCell" destination="gI3-9I-Ln5" id="Qzh-KT-O9m"/>
                                             <outlet property="likeButton" destination="w3l-6y-fJJ" id="4HM-AH-ZTn"/>
+                                            <outlet property="placeholderView" destination="qqZ-uh-zOh" id="n2h-FZ-Fy7"/>
                                             <segue destination="Lcg-gk-dmh" kind="presentation" identifier="ShowSingleImage" trigger="accessoryAction" modalTransitionStyle="crossDissolve" id="3cT-V7-pdx"/>
                                         </connections>
                                     </tableViewCell>
@@ -250,7 +267,7 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2AT-Ro-w15" userLabel="BackButton">
-                                <rect key="frame" x="9" y="9" width="48" height="48"/>
+                                <rect key="frame" x="9" y="68" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="nG5-Cy-7u2"/>
                                     <constraint firstAttribute="width" constant="48" id="zyy-Dx-IIN"/>
@@ -262,7 +279,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bt5-U2-nVx" userLabel="ShareButton">
-                                <rect key="frame" x="171.33333333333334" y="786" width="50.333333333333343" height="50"/>
+                                <rect key="frame" x="171.33333333333334" y="752" width="50.333333333333343" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="9UO-4P-qM9"/>
                                     <constraint firstAttribute="height" constant="50" id="Q2g-cG-Nmb"/>
@@ -303,7 +320,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rmI-h2-RkY" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ORE-ub-YvJ">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

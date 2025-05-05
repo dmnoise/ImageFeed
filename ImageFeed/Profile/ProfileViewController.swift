@@ -120,7 +120,11 @@ final class ProfileViewController: UIViewController {
             return
         }
         
-        let processeor = RoundCornerImageProcessor(cornerRadius: 35)
+        let processeor = RoundCornerImageProcessor(
+            cornerRadius: 35,
+            targetSize: CGSize(width: 70.0, height: 70.0),
+            backgroundColor: .clear
+        )
         
         avatarImageView.kf.setImage(
             with: imageUrl,
@@ -161,7 +165,8 @@ final class ProfileViewController: UIViewController {
         let actions = [
             AlertAction(title: "Нет", style: .destructive, handler: nil),
             AlertAction(title: "Да", style: .default) {
-                OAuth2TokenKeychain.shared.token = nil
+                
+                ProfileLogoutService.shared.logout()
                 
                 guard let window = UIApplication.shared.windows.first else {
                     assertionFailure("Invalid Configuration")

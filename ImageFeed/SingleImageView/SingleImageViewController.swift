@@ -23,15 +23,6 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
-    // MARK: - Private properties
-    private var image: UIImage? {
-        didSet {
-            guard isViewLoaded else { return }
-            
-            setupFullImage()
-        }
-    }
-    
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -60,7 +51,8 @@ final class SingleImageViewController: UIViewController {
     }
     
     @IBAction private func didTapShareButton() {
-        guard let image else { return }
+        
+        guard let image = imageView.image else { return }
         
         let share = UIActivityViewController(
             activityItems: [image],
@@ -83,29 +75,46 @@ final class SingleImageViewController: UIViewController {
             
             guard let self else { return }
             
+            ProgressHUD.dismiss()
+            
             switch result {
             case .success(let retriveImage):
-                DispatchQueue.main.async {
-                    self.image = retriveImage.image
-                }
-                
-                ProgressHUD.dismiss()
+                self.rescaleImageInScrollView(image: retriveImage.image)
+
             case .failure(let error):
+                showErrorLoadImage()
+                
                 LogService.error(error.localizedDescription)
             }
         }
     }
     
-    private func setupFullImage() {
-        
-        guard let image else { return }
-        
-        imageView.image = image
-        imageView.frame.size = image.size
-        rescaleImageInScrollView(image: image)
+    private func showErrorLoadImage() {
+        DispatchQueue.main.async {
+
+            let actions = [
+                AlertAction(title: "Не надо", style: .cancel, handler: nil),
+                AlertAction(title: "Повторить", style: .default) { [weak self] in
+                    guard let self else { return }
+                    
+                    loadFullImage()
+                }
+            ]
+            
+            let alert = AlertModel(
+                title: "Что-то пошло не так(",
+                message: "Попробовать ещё раз?",
+                actions: actions,
+                preferredStyle: .alert
+            )
+            
+            AlertPresenter(from: alert).presentAlertFromTopVC()
+        }
     }
     
     private func rescaleImageInScrollView(image: UIImage) {
+        imageView.frame.size = image.size
+        
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
         
