@@ -43,4 +43,16 @@ final class AlertPresenter {
         alert.view.accessibilityIdentifier = "AlertPresent"
         viewController.present(alert, animated: true, completion: nil)
     }
+    
+    func presentAlertFromTopVC() {
+        if let rootController = UIApplication.shared.windows.first?.rootViewController {
+            
+            var topController = rootController
+            while let presentedController = topController.presentedViewController {
+                topController = presentedController
+            }
+            
+           presentAlert(from: topController)
+        }
+    }
 }

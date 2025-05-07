@@ -139,45 +139,28 @@ extension SplashViewController: AuthViewControllerDelegate {
         
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
             
+            UIBlockingProgressHUD.dismiss()
+            
             guard let self else { return }
             
             switch result {
             case .success(let token):
+                
                 storage.token = token
                 self.fetchProfile(token)
 
             case .failure:
-                UIBlockingProgressHUD.dismiss()
                 LogService.error("Токен не был получен")
-               
-                DispatchQueue.main.async {
-                    if let rootController = UIApplication.shared.windows.first?.rootViewController {
-                        
-                        var topController = rootController
-                        while let presentedController = topController.presentedViewController {
-                            topController = presentedController
-                        }
-                        
-                        let actions = [
-                            AlertAction(title: "Ok", style: .cancel, handler: nil)
-                        ]
-                        
-                        let alert = AlertModel(
-                            title: "Что-то пошло не так(",
-                            message: "Не удалось войти в систему",
-                            actions: actions,
-                            preferredStyle: .alert
-                        )
-                        
-                        AlertPresenter(from: alert).presentAlert(from: topController)
-                    }
-                }
+                
+                showErrorAlert()
             }
         }
     }
     
     private func fetchProfile(_ token: String) {
-                             
+        
+        UIBlockingProgressHUD.show()
+        
         profileService.fetchProfile(token) { [weak self] result in
            
             UIBlockingProgressHUD.dismiss()
@@ -187,11 +170,30 @@ extension SplashViewController: AuthViewControllerDelegate {
             switch result {
             case .success(let profile):
                 profileImageService.fetchProfileImage(username: profile.username) { _ in }
-                
                 self.switchToTabBar()
+                
             case .failure(let error):
+                showErrorAlert()
                 LogService.error(error.localizedDescription)
             }
+        }
+    }
+    
+    private func showErrorAlert() {
+        DispatchQueue.main.async {
+
+            let actions = [
+                AlertAction(title: "Ok", style: .cancel, handler: nil)
+            ]
+            
+            let alert = AlertModel(
+                title: "Что-то пошло не так(",
+                message: "Не удалось войти в систему",
+                actions: actions,
+                preferredStyle: .alert
+            )
+            
+            AlertPresenter(from: alert).presentAlertFromTopVC()
         }
     }
 }

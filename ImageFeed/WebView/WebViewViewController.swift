@@ -94,7 +94,7 @@ final class WebViewViewController: UIViewController {
         {
             return codeItem.value
         } else {
-            LogService.error("Не удалось получить значение")
+            LogService.notice("Не удалось получить значение")
             return nil
         }
     }

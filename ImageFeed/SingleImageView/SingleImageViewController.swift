@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Kingfisher
+import ProgressHUD
 
 final class SingleImageViewController: UIViewController {
     
@@ -15,20 +17,16 @@ final class SingleImageViewController: UIViewController {
     
     // MARK: - Public properties
     static let identifier = "ShowSingleImage"
-    var image: UIImage? {
+    var imageURL: String? {
         didSet {
-            guard isViewLoaded, let image else { return }
-            
-            imageView.image = image
-            imageView.frame.size = image.size
-            rescaleImageInScrollView(image: image)
+            loadFullImage()
         }
     }
-
+    
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-            
+        
         setNeedsStatusBarAppearanceUpdate()
     }
     
@@ -38,10 +36,7 @@ final class SingleImageViewController: UIViewController {
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         
-        guard let image else { return }
-        imageView.image = image
-        imageView.frame.size = image.size
-        rescaleImageInScrollView(image: image)
+        loadFullImage()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -50,22 +45,76 @@ final class SingleImageViewController: UIViewController {
     
     // MARK: - IBAction
     @IBAction private func didTapBackButton() {
+        ProgressHUD.dismiss()
+        
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction private func didTapShareButton() {
-        guard let image else { return }
+        
+        guard let image = imageView.image else { return }
         
         let share = UIActivityViewController(
             activityItems: [image],
             applicationActivities: nil
         )
-
+        
         present(share, animated: true, completion: nil)
     }
     
     // MARK: - Private methods
+    private func loadFullImage() {
+        
+        guard isViewLoaded, let imageURL, let url = URL(string: imageURL) else {
+            return
+        }
+        
+        ProgressHUD.animate()
+        
+        imageView.kf.setImage(with: url) { [weak self] result in
+            
+            guard let self else { return }
+            
+            ProgressHUD.dismiss()
+            
+            switch result {
+            case .success(let retriveImage):
+                self.rescaleImageInScrollView(image: retriveImage.image)
+
+            case .failure(let error):
+                showErrorLoadImage()
+                
+                LogService.error(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func showErrorLoadImage() {
+        DispatchQueue.main.async {
+
+            let actions = [
+                AlertAction(title: "Не надо", style: .cancel, handler: nil),
+                AlertAction(title: "Повторить", style: .default) { [weak self] in
+                    guard let self else { return }
+                    
+                    loadFullImage()
+                }
+            ]
+            
+            let alert = AlertModel(
+                title: "Что-то пошло не так(",
+                message: "Попробовать ещё раз?",
+                actions: actions,
+                preferredStyle: .alert
+            )
+            
+            AlertPresenter(from: alert).presentAlertFromTopVC()
+        }
+    }
+    
     private func rescaleImageInScrollView(image: UIImage) {
+        imageView.frame.size = image.size
+        
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
         

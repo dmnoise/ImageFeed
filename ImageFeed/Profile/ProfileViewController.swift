@@ -96,7 +96,7 @@ final class ProfileViewController: UIViewController {
     
     private func updateProfileInfo() {
         guard let profile = profileService.profile else {
-            print("updateProfileInfo: profile == nil")
+            LogService.error("profile is empty")
             return
         }
         
@@ -120,7 +120,11 @@ final class ProfileViewController: UIViewController {
             return
         }
         
-        let processeor = RoundCornerImageProcessor(cornerRadius: 35)
+        let processeor = RoundCornerImageProcessor(
+            cornerRadius: 35,
+            targetSize: CGSize(width: 70.0, height: 70.0),
+            backgroundColor: .clear
+        )
         
         avatarImageView.kf.setImage(
             with: imageUrl,
@@ -159,9 +163,10 @@ final class ProfileViewController: UIViewController {
     @objc private func pressLogoutButtton() {
         
         let actions = [
-            AlertAction(title: "Нет", style: .destructive, handler: nil),
+            AlertAction(title: "Нет", style: .cancel, handler: nil),
             AlertAction(title: "Да", style: .default) {
-                OAuth2TokenKeychain.shared.token = nil
+                
+                ProfileLogoutService.shared.logout()
                 
                 guard let window = UIApplication.shared.windows.first else {
                     assertionFailure("Invalid Configuration")
@@ -173,8 +178,8 @@ final class ProfileViewController: UIViewController {
         ]
         
         let alert = AlertModel(
-            title: "Подверждение",
-            message: "Вы уверены что хотите выйти из аккаунта?",
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
             actions: actions,
             preferredStyle: .alert
         )
