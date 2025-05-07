@@ -98,17 +98,14 @@ final class ImagesListViewController: UIViewController {
     
     private func showNextImages() {
         
-        LogService.notice("start")
         UIBlockingProgressHUD.show()
         
         imagesListService.fetchPhotosNextPage() { error in
             
             UIBlockingProgressHUD.dismiss()
             
-            if let error = error {
+            if let error {
                 LogService.error("Ошибка загрузки изображений: \(error.localizedDescription)")
-            } else {
-                LogService.notice("Успешная загрузка изображений")
             }
         }
     }
@@ -122,13 +119,15 @@ extension ImagesListViewController: ImagesListCellDelegate {
         
         let photo = photos[indexPath.row]
         
+        UIBlockingProgressHUD.show()
+        
         imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { result in
-                        
+            
+            UIBlockingProgressHUD.dismiss()
+            
             switch result {
             case .success:
                 cell.changeLikeStatus(isLiked: !photo.isLiked)
-            
-                print("Like!")
                 
             case .failure(let error):
                 DispatchQueue.main.async {

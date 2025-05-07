@@ -60,8 +60,7 @@ final class ProfileImageService {
                     object: self,
                     userInfo: ["URL": url]
                 )
-                
-                print("image ok")
+
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -77,7 +76,7 @@ final class ProfileImageService {
     private func makeProfileImageServiceRequest(username: String) -> URLRequest? {
         
         guard let token = storage.token else {
-            LogService.error("token == nil")
+            LogService.error("token is empty")
             return nil
         }
         

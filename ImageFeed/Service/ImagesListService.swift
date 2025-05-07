@@ -55,6 +55,7 @@ final class ImagesListService {
     
     private let storage = OAuth2TokenKeychain.shared
     private let dateFormatter = ISO8601DateFormatter()
+    
 
     // MARK: - Public Methods
     func logout() {
@@ -117,40 +118,35 @@ final class ImagesListService {
             
             guard let self else { return }
             
+            self.task = nil
+            
             switch result {
             case .success(let photosRes):
-           
-                // TODO: По какой-то причине приходят изображения последняя в первом запросе и первая в следующем - одинаковые
-                // TODO: Вероятно так быть не должно, поэтому этот фильтр здесь
-                let uniquePhotos = photosRes.filter { new in
-                    !self.photos.contains(where: { $0.id == new.id })
+
+                DispatchQueue.main.async {
+                    self.photos.append(
+                        contentsOf: photosRes.map { element in
+                                .init(
+                                    id: element.id,
+                                    size: CGSize(width: element.width, height: element.height),
+                                    createdAt: self.dateFormatter.date(from: element.createdAt),
+                                    welcomeDescription: element.description,
+                                    thumbImageURL: element.urls.small,
+                                    largeImageURL: element.urls.full,
+                                    isLiked: element.likedByUser
+                                )
+                        }
+                    )
+                    
+                    self.lastLoadedPage += 1
+                    self.updatePhotos()
                 }
-                
-                photos.append(
-                    contentsOf: uniquePhotos.map { element in
-                            .init(
-                                id: element.id,
-                                size: CGSize(width: element.width, height: element.height),
-                                createdAt: self.dateFormatter.date(from: element.createdAt),
-                                welcomeDescription: element.description,
-                                thumbImageURL: element.urls.small,
-                                largeImageURL: element.urls.full,
-                                isLiked: element.likedByUser
-                            )
-                    }
-                )
-                
-                lastLoadedPage += 1
-                
-                updatePhotos()
                 
                 completion(nil)
                 
             case .failure(let error):
                 completion(error)
             }
-            
-            self.task = nil
         }
         
         self.task = task

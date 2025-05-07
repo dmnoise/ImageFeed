@@ -96,7 +96,7 @@ final class ProfileViewController: UIViewController {
     
     private func updateProfileInfo() {
         guard let profile = profileService.profile else {
-            print("updateProfileInfo: profile == nil")
+            LogService.error("profile is empty")
             return
         }
         
@@ -163,7 +163,7 @@ final class ProfileViewController: UIViewController {
     @objc private func pressLogoutButtton() {
         
         let actions = [
-            AlertAction(title: "Нет", style: .destructive, handler: nil),
+            AlertAction(title: "Нет", style: .cancel, handler: nil),
             AlertAction(title: "Да", style: .default) {
                 
                 ProfileLogoutService.shared.logout()
@@ -178,8 +178,8 @@ final class ProfileViewController: UIViewController {
         ]
         
         let alert = AlertModel(
-            title: "Подверждение",
-            message: "Вы уверены что хотите выйти из аккаунта?",
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
             actions: actions,
             preferredStyle: .alert
         )
