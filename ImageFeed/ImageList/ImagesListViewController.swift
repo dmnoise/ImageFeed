@@ -111,6 +111,7 @@ final class ImagesListViewController: UIViewController {
     }
 }
 
+// MARK: - ImagesListCellDelegate
 extension ImagesListViewController: ImagesListCellDelegate {
     
     func imagesListCellDidTapLike(_ cell: ImagesListCell) {

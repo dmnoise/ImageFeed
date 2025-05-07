@@ -11,7 +11,7 @@ private enum ImageServiceError: Error {
     case FailConvertUrl
 }
 
-struct UserResult: Codable {
+private struct UserResult: Codable {
     let profileImage: [String:String]
 }
 
@@ -27,7 +27,7 @@ final class ProfileImageService {
     private var task: URLSessionTask?
     
     // MARK: - Public Methods
-    func fetchProfileImage(username: String, completion: @escaping (Result<UserResult, Error>) -> Void) {
+    func fetchProfileImage(username: String, completion: @escaping (Result<Void, Error>) -> Void) {
         
         guard
             let request = makeProfileImageServiceRequest(username: username)
@@ -53,7 +53,7 @@ final class ProfileImageService {
                 
                 self.avatarURL = url
                 
-                completion(.success(responce))
+                completion(.success(()))
                 
                 NotificationCenter.default.post(
                     name: ProfileImageService.didChangeNotification,
