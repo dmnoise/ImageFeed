@@ -128,16 +128,17 @@ final class ImagesListService {
     // MARK: - Private methods
     private func updateLikeStatus(for id: String, isLike: Bool) {
         
-        if let index = photos.firstIndex(where: { $0.id == id }) {
-            
-            var photo = photos[index]
-            photo.isLiked = isLike
-            photos[index] = photo
-            
-            updatePhotos()
-        } else {
+        guard let index = photos.firstIndex(where: { $0.id == id }) else {
             LogService.error("Фото ID:\(id) - не найдено")
+            return
         }
+        
+        var photo = photos[index]
+        photo.isLiked = isLike
+        photos[index] = photo
+        
+        updatePhotos()
+        
     }
     
     private func makeLikePhotoRequest(id: String, isLike: Bool) -> URLRequest? {
