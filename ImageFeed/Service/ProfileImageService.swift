@@ -11,10 +11,6 @@ private enum ImageServiceError: Error {
     case FailConvertUrl
 }
 
-private struct UserResult: Codable {
-    let profileImage: [String:String]
-}
-
 final class ProfileImageService {
     
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")

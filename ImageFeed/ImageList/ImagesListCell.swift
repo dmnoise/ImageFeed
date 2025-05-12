@@ -73,11 +73,8 @@ final class ImagesListCell: UITableViewCell {
     
     func changeLikeStatus(isLiked: Bool) {
         
-        let likeImageName = isLiked ? "Active" : "No Active"
-
-        if let likeImage = UIImage(named: likeImageName) {
-            likeButton.setImage(likeImage, for: .normal)
-        }
+        let likeImage = isLiked ? UIImage(resource: .active) : UIImage(resource: .noActive)
+        likeButton.setImage(likeImage, for: .normal)
     }
     
     // MARK: - Private methods  

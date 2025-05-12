@@ -52,7 +52,10 @@ final class SingleImageViewController: UIViewController {
     
     @IBAction private func didTapShareButton() {
         
-        guard let image = imageView.image else { return }
+        guard let image = imageView.image else {
+            LogService.notice("image is empty")
+            return
+        }
         
         let share = UIActivityViewController(
             activityItems: [image],

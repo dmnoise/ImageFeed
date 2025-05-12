@@ -12,34 +12,6 @@ private enum ImageListServiceError: Error {
     case tokenIsEmpty
 }
 
-struct Photo {
-    let id: String
-    let size: CGSize
-    let createdAt: Date?
-    let welcomeDescription: String?
-    let thumbImageURL: String
-    let largeImageURL: String
-    var isLiked: Bool
-    
-}
-
-private struct PhotoResult: Decodable {
-    let id: String
-    let createdAt: String
-    let width: Int
-    let height: Int
-    let likedByUser: Bool
-    let description: String?
-    let urls: UrlsResult
-}
-
-private struct UrlsResult: Decodable {
-    let full: String
-    let small: String
-    let thumb: String
-}
-
-
 final class ImagesListService {
     
     static let shared = ImagesListService()
