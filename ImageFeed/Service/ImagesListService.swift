@@ -96,8 +96,13 @@ final class ImagesListService {
             case .success(let photosRes):
 
                 DispatchQueue.main.async {
+                    
+                    let uniquePhotos = photosRes.filter { new in
+                        !self.photos.contains(where: { $0.id == new.id })
+                    }
+                    
                     self.photos.append(
-                        contentsOf: photosRes.map { element in
+                        contentsOf: uniquePhotos.map { element in
                                 .init(
                                     id: element.id,
                                     size: CGSize(width: element.width, height: element.height),
