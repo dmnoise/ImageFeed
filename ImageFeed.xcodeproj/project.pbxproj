@@ -33,6 +33,7 @@
 		2098B3452DD1EC240065AD9B /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2098B3442DD1EC1A0065AD9B /* ProfileResult.swift */; };
 		2098B3472DD1EC690065AD9B /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2098B3462DD1EC620065AD9B /* Profile.swift */; };
 		2098B3492DD1ECC00065AD9B /* UserResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2098B3482DD1ECBB0065AD9B /* UserResult.swift */; };
+		2098B34B2DD3BC7B0065AD9B /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2098B34A2DD3BC7A0065AD9B /* WebViewPresenter.swift */; };
 		20B9652C2D8589130049DA77 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9652B2D8589100049DA77 /* AuthViewController.swift */; };
 		20B9652E2D858BD80049DA77 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9652D2D858BD70049DA77 /* WebViewViewController.swift */; };
 		20B965322D859F060049DA77 /* WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B965312D859F050049DA77 /* WebViewViewControllerDelegate.swift */; };
@@ -78,6 +79,7 @@
 		2098B3442DD1EC1A0065AD9B /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
 		2098B3462DD1EC620065AD9B /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		2098B3482DD1ECBB0065AD9B /* UserResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResult.swift; sourceTree = "<group>"; };
+		2098B34A2DD3BC7A0065AD9B /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		20B9652B2D8589100049DA77 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		20B9652D2D858BD70049DA77 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		20B965312D859F050049DA77 /* WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -153,7 +155,6 @@
 				2071DB4B2DA3E09200AA2C66 /* Service */,
 				20B965702D8B48070049DA77 /* Helpers */,
 				20B9652A2D8588FE0049DA77 /* Auth */,
-				2071DB0A2D916DD200AA2C66 /* WebView */,
 				205C5FC22D6DCAA5002C1E9B /* ImageList */,
 				206598522D7083F6008DFC56 /* Profile */,
 				20256E8C2D774FCF00F8E10D /* SingleImageView */,
@@ -192,6 +193,7 @@
 		2071DB0A2D916DD200AA2C66 /* WebView */ = {
 			isa = PBXGroup;
 			children = (
+				2098B34A2DD3BC7A0065AD9B /* WebViewPresenter.swift */,
 				20B965312D859F050049DA77 /* WebViewViewControllerDelegate.swift */,
 				20B9652D2D858BD70049DA77 /* WebViewViewController.swift */,
 			);
@@ -226,6 +228,7 @@
 				20B9656E2D8B11030049DA77 /* OAuth2Service.swift */,
 				20B965732D8C17430049DA77 /* OAuth2TokenKeychain.swift */,
 				20B9652B2D8589100049DA77 /* AuthViewController.swift */,
+				2071DB0A2D916DD200AA2C66 /* WebView */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				2071DB4E2DA58AC200AA2C66 /* ProfileService.swift in Sources */,
 				20B965322D859F060049DA77 /* WebViewViewControllerDelegate.swift in Sources */,
 				205C5FC12D6DCA72002C1E9B /* ImagesListCell.swift in Sources */,
+				2098B34B2DD3BC7B0065AD9B /* WebViewPresenter.swift in Sources */,
 				2071DB6B2DB7FC2800AA2C66 /* ImagesListService.swift in Sources */,
 				2098B3492DD1ECC00065AD9B /* UserResult.swift in Sources */,
 				206598512D706E75008DFC56 /* ProfileViewController.swift in Sources */,
