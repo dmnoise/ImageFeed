@@ -67,7 +67,7 @@
         <!--WebView View Controller-->
         <scene sceneID="JVy-3s-x0H">
             <objects>
-                <viewController title="WebView View Controller" id="PjX-eg-rm1" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" title="WebView View Controller" id="PjX-eg-rm1" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cXi-To-tlc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
