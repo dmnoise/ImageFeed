@@ -7,10 +7,6 @@
 
 import Foundation
 
-enum WebViewConstants {
-    static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
-}
-
 public protocol WebViewPresenterProtocol {
     var view: WebViewViewControllerProtocol? { get set }
     
@@ -22,17 +18,21 @@ public protocol WebViewPresenterProtocol {
 final class WebViewPresenter: WebViewPresenterProtocol {
     weak var view: WebViewViewControllerProtocol?
     
+    // MARK: - Private properties
+    private var authConfiguration = AuthConfiguration.standart
+    
+    // MARK: - Public Methods
     func viewDidLoad() {
-        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
+        guard var urlComponents = URLComponents(string: authConfiguration.unsplashAuthorizeURLString) else {
             LogService.error("Не удалось сформировать urlComponents")
             return
         }
         
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "client_id", value: authConfiguration.accessKey),
+            URLQueryItem(name: "redirect_uri", value: authConfiguration.redirectURI),
             URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
+            URLQueryItem(name: "scope", value: authConfiguration.accessScope)
         ]
         
         guard let url = urlComponents.url else {
@@ -68,6 +68,7 @@ final class WebViewPresenter: WebViewPresenterProtocol {
         view?.setProgressHidden(shouldHideProgress(for: newProgress))
     }
     
+    // MARK: - Private methods
     private func shouldHideProgress(for value: Float) -> Bool {
         abs(value - 1.0) <= 0.0001
     }
