@@ -27,6 +27,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgv-Ok-ZoM">
                                 <rect key="frame" x="16" y="646" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="L11-e2-dfi"/>
                                 </constraints>
@@ -170,6 +171,7 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3l-6y-fJJ" userLabel="Like">
                                                     <rect key="frame" x="333" y="4" width="44" height="44"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="likeButton"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="bTR-rH-50s"/>
                                                         <constraint firstAttribute="width" constant="44" id="jRh-Rv-5qQ"/>
@@ -268,6 +270,7 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2AT-Ro-w15" userLabel="BackButton">
                                 <rect key="frame" x="9" y="68" width="48" height="48"/>
+                                <accessibility key="accessibilityConfiguration" identifier="navBackButtonWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="nG5-Cy-7u2"/>
                                     <constraint firstAttribute="width" constant="48" id="zyy-Dx-IIN"/>

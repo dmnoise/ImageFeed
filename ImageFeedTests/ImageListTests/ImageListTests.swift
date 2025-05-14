@@ -26,7 +26,7 @@ final class ImageListViewPresenterTests: XCTestCase {
     
     func testNumberOfRows() {
         service.photos = [Photo.mock(id: "1"), Photo.mock(id: "2")]
-        presenter.handlePhotosDidChange() // обновляем presenter.photos
+        presenter.handlePhotosDidChange()
         
         XCTAssertEqual(presenter.numberOfRows(), 2)
     }
