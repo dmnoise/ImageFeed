@@ -22,7 +22,7 @@ final class ImageListViewPresenter: ImagesListViewPresenterProtocol {
     weak var view: ImagesListViewControllerProtocol?
     
     // MARK: - Private properties
-    private let imagesListService = ImagesListService.shared
+    private let imagesListService: ImagesListServiceProtocol
     private let storage = OAuth2TokenKeychain.shared
     
     private var photos: [Photo] = []
@@ -32,6 +32,10 @@ final class ImageListViewPresenter: ImagesListViewPresenterProtocol {
         formatter.timeStyle = .none
         return formatter
     }()
+    
+    init(imagesListService: ImagesListServiceProtocol = ImagesListService.shared) {
+        self.imagesListService = imagesListService
+    }
     
     // MARK: - Public Methods
     func viewDidLoad() {
@@ -134,8 +138,7 @@ final class ImageListViewPresenter: ImagesListViewPresenterProtocol {
         }
     }
     
-    // MARK: - Private methods
-    private func handlePhotosDidChange() {
+    func handlePhotosDidChange() {
         let oldCount = photos.count
         photos = imagesListService.photos
         

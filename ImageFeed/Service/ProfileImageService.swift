@@ -11,7 +11,11 @@ private enum ImageServiceError: Error {
     case FailConvertUrl
 }
 
-final class ProfileImageService {
+protocol ProfileImageServiceProtocol {
+    var avatarURL: URL? { get }
+}
+
+final class ProfileImageService: ProfileImageServiceProtocol {
     
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     static let shared = ProfileImageService()

@@ -19,9 +19,19 @@ protocol ProfileViewPresenterProtocol {
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     weak var view: ProfileViewControllerProtocol?
     
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
+    private let profileService: ProfileServiceProtocol
+    private let profileLogoutService: ProfileLogoutServiceProtocol
+    private let profileImageService: ProfileImageServiceProtocol
     private var profileImageServiceObserver: NSObjectProtocol?
+    
+    init(profileService: ProfileServiceProtocol = ProfileService.shared,
+         profileLogoutService: ProfileLogoutServiceProtocol = ProfileLogoutService.shared,
+         profileImageService: ProfileImageServiceProtocol = ProfileImageService.shared
+    ) {
+        self.profileService = profileService
+        self.profileLogoutService = profileLogoutService
+        self.profileImageService = profileImageService
+    }
     
     // MARK: - Public Methods
     func viewDidLoad() {
@@ -77,7 +87,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     // MARK: - Private methods
     private func logout() {
-        ProfileLogoutService.shared.logout()
+        profileLogoutService.logout()
         view?.proceedToSplashScreen()
     }
     
