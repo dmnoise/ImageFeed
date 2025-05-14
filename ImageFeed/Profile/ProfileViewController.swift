@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 protocol ProfileViewControllerProtocol: AnyObject {
-    var presenter: ProfileViewPresenterProtocol? { get set }
+    var presenter: ProfileViewPresenterProtocol? { get }
     
     func showProfileInfo(_ profile: Profile)
     func setAvatar(with imageUrl: URL)
@@ -17,9 +17,13 @@ protocol ProfileViewControllerProtocol: AnyObject {
     func showAlert(_ alert: AlertModel)
 }
 
-final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
-    var presenter: ProfileViewPresenterProtocol?
+final class ProfileViewController: UIViewController {
+    private(set) var presenter: ProfileViewPresenterProtocol?
     
+    func configure(with presenter: ProfileViewPresenterProtocol) {
+        self.presenter = presenter
+        presenter.attachView(self)
+    }
     
     // MARK: - Private properties
     private let avatarImageView: UIImageView = {
@@ -64,10 +68,6 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         return button
     }()
     
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
-    private var profileImageServiceObserver: NSObjectProtocol?
-    
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -87,7 +87,55 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         .lightContent
     }
     
-    // MARK: - Public Methods
+    // MARK: - Private methods
+    private func initialUi() {
+        view.backgroundColor = .ypBlack
+        
+        view.addSubview(avatarImageView)
+        view.addSubview(nameLabel)
+        view.addSubview(loginLabel)
+        view.addSubview(descriptionLabel)
+        view.addSubview(logoutButton)
+        
+        setupConstraints()
+        
+        logoutButton.addTarget(self, action: #selector(pressLogoutButtton), for: .touchUpInside)
+    }
+ 
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 70),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 70),
+            
+            logoutButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
+            logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            logoutButton.heightAnchor.constraint(equalToConstant: 44),
+            logoutButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
+            nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            
+            loginLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            loginLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            loginLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 8),
+            descriptionLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: loginLabel.trailingAnchor)
+        ])
+    }
+    
+    // MARK: - objc
+    @objc private func pressLogoutButtton() {
+        presenter?.didTapLogout()
+    }
+}
+
+// MARK: - ProfileViewControllerProtocol
+extension ProfileViewController: ProfileViewControllerProtocol {
     func showProfileInfo(_ profile: Profile) {
         nameLabel.text = profile.name
         loginLabel.text = profile.loginName
@@ -120,54 +168,5 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     
     func showAlert(_ alert: AlertModel) {
         AlertPresenter(from: alert).presentAlert(from: self)
-    }
-    
-    
-    // MARK: - Private methods
-    private func initialUi() {
-        view.backgroundColor = .ypBlack
-        
-        view.addSubview(avatarImageView)
-        view.addSubview(nameLabel)
-        view.addSubview(loginLabel)
-        view.addSubview(descriptionLabel)
-        view.addSubview(logoutButton)
-        
-        setupConstraints()
-        
-        logoutButton.addTarget(self, action: #selector(pressLogoutButtton), for: .touchUpInside)
-    }
-    
-    
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            avatarImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 70),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 70),
-            
-            logoutButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
-            logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            logoutButton.heightAnchor.constraint(equalToConstant: 44),
-            logoutButton.heightAnchor.constraint(equalToConstant: 44),
-            
-            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
-            nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-            
-            loginLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
-            loginLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            loginLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            
-            descriptionLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 8),
-            descriptionLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
-            descriptionLabel.trailingAnchor.constraint(equalTo: loginLabel.trailingAnchor)
-        ])
-    }
-    
-    // MARK: - objc
-    @objc private func pressLogoutButtton() {
-        presenter?.didTapLogout()
     }
 }

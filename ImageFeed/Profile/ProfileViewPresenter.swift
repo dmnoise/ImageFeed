@@ -11,6 +11,7 @@ protocol ProfileViewPresenterProtocol {
     var view: ProfileViewControllerProtocol? { get set }
     
     func viewDidLoad()
+    func attachView(_ view: ProfileViewControllerProtocol)
     func addObserverUpdateAvatar()
     func didTapLogout()
 }
@@ -31,6 +32,10 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
         
         view?.showProfileInfo(profile)
         updateAvatar()
+    }
+    
+    func attachView(_ view: ProfileViewControllerProtocol) {
+        self.view = view
     }
     
     func addObserverUpdateAvatar() {
