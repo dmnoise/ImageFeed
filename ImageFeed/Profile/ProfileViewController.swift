@@ -8,7 +8,18 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    
+    func showProfileInfo(_ profile: Profile)
+    func setAvatar(with imageUrl: URL)
+    func proceedToSplashScreen()
+    func showAlert(_ alert: AlertModel)
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
+    var presenter: ProfileViewPresenterProtocol?
+    
     
     // MARK: - Private properties
     private let avatarImageView: UIImageView = {
@@ -67,15 +78,48 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initialUi()
-        updateProfileInfo()
-        
-        addObserverUpdateAvatar()
-        updateAvatar()
+        presenter?.viewDidLoad()
+        presenter?.addObserverUpdateAvatar()
+        initialUi()  
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
+    }
+    
+    // MARK: - Public Methods
+    func showProfileInfo(_ profile: Profile) {
+        nameLabel.text = profile.name
+        loginLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
+    }
+    
+    func setAvatar(with imageUrl: URL) {
+        
+        let processeor = RoundCornerImageProcessor(
+            cornerRadius: 35,
+            targetSize: CGSize(width: 70.0, height: 70.0),
+            backgroundColor: .clear
+        )
+        
+        avatarImageView.kf.setImage(
+            with: imageUrl,
+            placeholder: UIImage(resource: .avatarStub),
+            options: [.processor(processeor)]
+        )
+    }
+    
+    func proceedToSplashScreen() {
+        guard let window = UIApplication.shared.windows.first else {
+            assertionFailure("Invalid Configuration")
+            return
+        }
+        
+        window.rootViewController = SplashViewController()
+    }
+    
+    func showAlert(_ alert: AlertModel) {
+        AlertPresenter(from: alert).presentAlert(from: self)
     }
     
     
@@ -94,44 +138,7 @@ final class ProfileViewController: UIViewController {
         logoutButton.addTarget(self, action: #selector(pressLogoutButtton), for: .touchUpInside)
     }
     
-    private func updateProfileInfo() {
-        guard let profile = profileService.profile else {
-            LogService.error("profile is empty")
-            return
-        }
-        
-        nameLabel.text = profile.name
-        loginLabel.text = profile.loginName
-        descriptionLabel.text = profile.bio
-    }
     
-    private func addObserverUpdateAvatar() {
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.didChangeNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            self?.updateAvatar()
-        }
-    }
-    
-    private func updateAvatar() {
-        guard let imageUrl = profileImageService.avatarURL else {
-            return
-        }
-        
-        let processeor = RoundCornerImageProcessor(
-            cornerRadius: 35,
-            targetSize: CGSize(width: 70.0, height: 70.0),
-            backgroundColor: .clear
-        )
-        
-        avatarImageView.kf.setImage(
-            with: imageUrl,
-            placeholder: UIImage(resource: .avatarStub),
-            options: [.processor(processeor)]
-        )        
-    }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -161,29 +168,6 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - objc
     @objc private func pressLogoutButtton() {
-        
-        let actions = [
-            AlertAction(title: "Нет", style: .cancel, handler: nil),
-            AlertAction(title: "Да", style: .default) {
-                
-                ProfileLogoutService.shared.logout()
-                
-                guard let window = UIApplication.shared.windows.first else {
-                    assertionFailure("Invalid Configuration")
-                    return
-                }
-                
-                window.rootViewController = SplashViewController()
-            }
-        ]
-        
-        let alert = AlertModel(
-            title: "Пока, пока!",
-            message: "Уверены что хотите выйти?",
-            actions: actions,
-            preferredStyle: .alert
-        )
-        
-        AlertPresenter(from: alert).presentAlert(from: self)
+        presenter?.didTapLogout()
     }
 }
