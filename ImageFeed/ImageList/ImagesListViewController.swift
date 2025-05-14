@@ -155,6 +155,10 @@ extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
+        if ProcessInfo.processInfo.arguments.contains("testMode") {
+            return
+        }
+        
         let numberOfRows = presenter?.numberOfRows() ?? 0
         
         if numberOfRows - 1 == indexPath.row {

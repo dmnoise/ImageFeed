@@ -13,6 +13,7 @@ final class ImageFeedUITests: XCTestCase {
     
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app.launchArguments = ["testMode"]
         app.launch()
     }
     
@@ -53,20 +54,20 @@ final class ImageFeedUITests: XCTestCase {
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         cell.swipeUp()
         
-        sleep(2)
+        XCTAssertTrue(cell.waitForExistence(timeout: 2))
         
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
         
         cellToLike.buttons["likeButton"].tap()
         cellToLike.buttons["likeButton"].tap()
         
-        sleep(2)
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 2))
         
         cellToLike.tap()
         
-        sleep(2)
-        
         let image = app.scrollViews.images.element(boundBy: 0)
+        let imageExists = image.waitForExistence(timeout: 5)
+        XCTAssertTrue(imageExists, "Изображение не появилось вовремя")
 
         image.pinch(withScale: 3, velocity: 1)
         image.pinch(withScale: 0.5, velocity: -1)
@@ -76,16 +77,16 @@ final class ImageFeedUITests: XCTestCase {
     }
     
     func testProfile() throws {
-        func testProfile() throws {
-            sleep(3)
-            app.tabBars.buttons.element(boundBy: 1).tap()
-           
-            XCTAssertTrue(app.staticTexts["Dmitriy Noise"].exists)
-            XCTAssertTrue(app.staticTexts["@dmnoise"].exists)
-            
-            app.buttons["logoutButton"].tap()
-            
-            app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
-        }
+        app.tabBars.buttons.element(boundBy: 1).tap()
+        
+        let nameLabel = app.staticTexts["Dmitriy Noise"]
+        let usernameLabel = app.staticTexts["@dmnoise"]
+        
+        XCTAssertTrue(nameLabel.waitForExistence(timeout: 5), "Имя пользователя не появилось")
+        XCTAssertTrue(usernameLabel.exists, "Юзернейм не найден")
+        
+        app.buttons["logoutButton"].tap()
+        
+        app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
     }
 }
