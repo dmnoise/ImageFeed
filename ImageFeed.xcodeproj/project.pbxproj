@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2010DB0D2D84B12600818D7B /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2010DB0C2D84B12600818D7B /* AuthConfiguration.swift */; };
+		2043A7912DD7AFB8003A04F1 /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2043A78F2DD7AFB8003A04F1 /* AuthConfiguration.swift */; };
+		2043A7932DD7AFC3003A04F1 /* HttpMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2043A7922DD7AFBD003A04F1 /* HttpMethods.swift */; };
+		2043A7952DD7AFDE003A04F1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2043A7942DD7AFDD003A04F1 /* Constants.swift */; };
 		205C5F872D6C87E2002C1E9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C5F7D2D6C87E2002C1E9B /* AppDelegate.swift */; };
 		205C5F882D6C87E2002C1E9B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C5F842D6C87E2002C1E9B /* SceneDelegate.swift */; };
 		205C5F892D6C87E2002C1E9B /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205C5F852D6C87E2002C1E9B /* ImagesListViewController.swift */; };
@@ -66,8 +68,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2010DB0C2D84B12600818D7B /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		2043A6F72DD53FF6003A04F1 /* ImageFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2043A78F2DD7AFB8003A04F1 /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
+		2043A7922DD7AFBD003A04F1 /* HttpMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethods.swift; sourceTree = "<group>"; };
+		2043A7942DD7AFDD003A04F1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		205C5F652D6C87CC002C1E9B /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		205C5F7D2D6C87E2002C1E9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		205C5F7E2D6C87E2002C1E9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -158,6 +162,16 @@
 			path = SingleImageView;
 			sourceTree = "<group>";
 		};
+		2043A7902DD7AFB8003A04F1 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				2043A7942DD7AFDD003A04F1 /* Constants.swift */,
+				2043A7922DD7AFBD003A04F1 /* HttpMethods.swift */,
+				2043A78F2DD7AFB8003A04F1 /* AuthConfiguration.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
 		205C5F5C2D6C87CC002C1E9B = {
 			isa = PBXGroup;
 			children = (
@@ -182,11 +196,11 @@
 		205C5F862D6C87E2002C1E9B /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
-				2010DB0C2D84B12600818D7B /* AuthConfiguration.swift */,
 				205C5F7D2D6C87E2002C1E9B /* AppDelegate.swift */,
 				205C5F842D6C87E2002C1E9B /* SceneDelegate.swift */,
 				205C5F832D6C87E2002C1E9B /* Main.storyboard */,
 				2071DB652DB1096500AA2C66 /* TabBarController.swift */,
+				2043A7902DD7AFB8003A04F1 /* Configuration */,
 				20BD854F2DD1E9660045E71C /* Models */,
 				2071DB562DAD142200AA2C66 /* Presenter */,
 				2071DB4B2DA3E09200AA2C66 /* Service */,
@@ -480,6 +494,7 @@
 				206598512D706E75008DFC56 /* ProfileViewController.swift in Sources */,
 				205EFB592DD4E9A600ED72E3 /* ImageListViewPresenter.swift in Sources */,
 				2071DB572DAD142200AA2C66 /* AlertPresenter.swift in Sources */,
+				2043A7932DD7AFC3003A04F1 /* HttpMethods.swift in Sources */,
 				20B9656F2D8B11060049DA77 /* OAuth2Service.swift in Sources */,
 				2071DB5C2DAEB48F00AA2C66 /* LogService.swift in Sources */,
 				20B965762D8D7C3D0049DA77 /* SplashViewController.swift in Sources */,
@@ -487,7 +502,6 @@
 				20B9652C2D8589130049DA77 /* AuthViewController.swift in Sources */,
 				2098B3452DD1EC240065AD9B /* ProfileResult.swift in Sources */,
 				2071DB4C2DA3E09200AA2C66 /* UIBlockingProgressHUD.swift in Sources */,
-				2010DB0D2D84B12600818D7B /* AuthConfiguration.swift in Sources */,
 				2098B34D2DD3CC8B0065AD9B /* AuthHelper.swift in Sources */,
 				2071DB662DB1096D00AA2C66 /* TabBarController.swift in Sources */,
 				2071DB502DA6DC0200AA2C66 /* ProfileImageService.swift in Sources */,
@@ -497,7 +511,9 @@
 				20BD854D2DC94FCA0045E71C /* ProfileLogoutService.swift in Sources */,
 				20B9652E2D858BD80049DA77 /* WebViewViewController.swift in Sources */,
 				2098B3422DD1EB9E0065AD9B /* PhotoResult.swift in Sources */,
+				2043A7952DD7AFDE003A04F1 /* Constants.swift in Sources */,
 				20B965742D8C17440049DA77 /* OAuth2TokenKeychain.swift in Sources */,
+				2043A7912DD7AFB8003A04F1 /* AuthConfiguration.swift in Sources */,
 				2098B3432DD1EBA30065AD9B /* UrlsResult.swift in Sources */,
 				2098B3472DD1EC690065AD9B /* Profile.swift in Sources */,
 				205C5F892D6C87E2002C1E9B /* ImagesListViewController.swift in Sources */,
@@ -603,7 +619,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.dmitroy.ImageFeed;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.dmitroy.ImageFeeeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -636,7 +652,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.dmitroy.ImageFeed;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.dmitroy.ImageFeeeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

@@ -59,11 +59,13 @@ final class ImageFeedUITests: XCTestCase {
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
         
         cellToLike.buttons["likeButton"].tap()
-        cellToLike.buttons["likeButton"].tap()
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 2))
         
+        cellToLike.buttons["likeButton"].tap()
         XCTAssertTrue(cellToLike.waitForExistence(timeout: 2))
         
         cellToLike.tap()
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 2))
         
         let image = app.scrollViews.images.element(boundBy: 0)
         let imageExists = image.waitForExistence(timeout: 5)
